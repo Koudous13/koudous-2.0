@@ -1,7 +1,13 @@
 import { login } from "./actions";
 import { Lock } from "lucide-react";
 
-export default function LoginPage() {
+export default async function LoginPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+    const errorMsg = (await searchParams).error;
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-koudous-bg relative overflow-hidden px-4">
             {/* Background Effect */}
@@ -15,6 +21,16 @@ export default function LoginPage() {
                     <h1 className="font-display text-3xl font-bold text-white text-center">Cockpit</h1>
                     <p className="text-koudous-text/60 mt-2 text-sm">Zone Réservée - KOUDOUS DAOUDA</p>
                 </div>
+
+                {errorMsg && (
+                    <div className="mb-6 bg-red-500/10 border border-red-500/50 p-4 rounded-lg flex items-center justify-center">
+                        <p className="text-red-400 text-sm font-medium text-center">
+                            {errorMsg === "Invalid_Credentials"
+                                ? "Identifiants invalides. Vérifiez votre email et mot de passe."
+                                : "Une erreur d'authentification est survenue."}
+                        </p>
+                    </div>
+                )}
 
                 <form className="space-y-6">
                     <div>
