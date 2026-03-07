@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import ImageUploader from "@/components/admin/ImageUploader";
 import { createClient } from "@/utils/supabase/client";
+import { generateSlug } from "@/utils/slugify";
 import { Loader2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -29,13 +30,23 @@ export default function EditArticleForm({ article, projects }: Props) {
         project_id: article.project_id || "",
     });
 
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newTitle = e.target.value;
+        setFormData(prev => ({
+            ...prev,
+            title: newTitle,
+            // Auto-fill slug only if it's currently empty
+            slug: prev.slug === "" ? generateSlug(newTitle) : prev.slug,
+        }));
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
         try {
             const { error } = await supabase.from("articles").update({
                 title: formData.title,
-                slug: formData.slug,
+                slug: formData.slug || generateSlug(formData.title),
                 excerpt: formData.excerpt,
                 category: formData.category,
                 cover_image: formData.cover_image,
@@ -79,11 +90,11 @@ export default function EditArticleForm({ article, projects }: Props) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                             <label className="text-sm font-bold text-white">Titre</label>
-                            <input type="text" required value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-primary" />
+                            <input type="text" required value={formData.title} onChange={handleTitleChange} className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-primary" />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-bold text-white">Slug</label>
-                            <input type="text" value={formData.slug} onChange={(e) => setFormData({ ...formData, slug: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-primary" />
+                            <label className="text-sm font-bold text-white">Slug <span className="text-koudous-text/40 font-normal">(URL — auto-généré si vide)</span></label>
+                            <input type="text" value={formData.slug} onChange={(e) => setFormData({ ...formData, slug: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white font-mono text-sm focus:outline-none focus:border-koudous-primary" placeholder="mon-super-article" />
                         </div>
                     </div>
                     <div className="space-y-2">

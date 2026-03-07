@@ -9,12 +9,15 @@ export const revalidate = 60; // 1 minute cache
 export default async function ArticlesPage() {
     const supabase = await createClient();
 
-    // Fetch all published articles
+    // Fetch all published articles with valid slugs
     const { data: articles } = await supabase
         .from("articles")
         .select("*, projects(title, slug)")
         .eq("published", true)
+        .neq("slug", "")
+        .not("slug", "is", null)
         .order("created_at", { ascending: false });
+
 
     return (
         <div className="max-w-4xl mx-auto py-12">

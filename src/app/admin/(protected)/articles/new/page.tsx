@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import RichTextEditor from "@/components/admin/RichTextEditor";
+import ImageUploader from "@/components/admin/ImageUploader";
 import { createClient } from "@/utils/supabase/client";
+import { generateSlug } from "@/utils/slugify";
 
 export default function NewArticlePage() {
     const router = useRouter();
@@ -28,7 +30,7 @@ export default function NewArticlePage() {
             const { error } = await supabase.from("articles").insert([
                 {
                     title: formData.title,
-                    slug: formData.slug || formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+                    slug: formData.slug || generateSlug(formData.title),
                     excerpt: formData.excerpt,
                     content: formData.content,
                     category: formData.category,
