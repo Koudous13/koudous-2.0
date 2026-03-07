@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-koudous-bg: var(--koudous-bg);
+  --color-koudous-text: var(--koudous-text);
+  --color-koudous-primary: var(--koudous-primary);
+  --color-koudous-secondary: var(--koudous-secondary);
+  
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-syne);
+}
+
+:root {
+  --koudous-bg: #0D0D0D;
+  --koudous-text: #E0E0E0;
+  --koudous-primary: #FF7F11;
+  --koudous-secondary: #B0652F;
+}
+
+body {
+  background-color: var(--koudous-bg);
+  color: var(--koudous-text);
+  font-family: var(--font-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar minimale */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--koudous-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--koudous-secondary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--koudous-primary);
+}
