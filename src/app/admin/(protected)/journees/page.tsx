@@ -1,8 +1,9 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { Plus, Trash2, CalendarDays } from "lucide-react";
+import { Plus, CalendarDays } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export default async function AdminJourneesPage() {
     const supabase = await createClient();
@@ -23,10 +24,7 @@ export default async function AdminJourneesPage() {
                     <h1 className="text-3xl font-display font-bold text-white mb-2">Micro-Blogging (Mes Journées)</h1>
                     <p className="text-koudous-text/60">Histoires brutes, pensées algorithmiques et Vibe Coding.</p>
                 </div>
-                <Link
-                    href="/admin/journees/new"
-                    className="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-lg font-bold hover:bg-koudous-text transition-all"
-                >
+                <Link href="/admin/journees/new" className="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-lg font-bold hover:bg-koudous-text transition-all">
                     <Plus size={20} />
                     <span>Nouvelle Pensée</span>
                 </Link>
@@ -45,19 +43,20 @@ export default async function AdminJourneesPage() {
                                     <CalendarDays size={16} />
                                     {format(new Date(entry.created_at), "dd MMM yyyy • HH:mm", { locale: fr })}
                                 </div>
-                                <button className="text-koudous-text/40 hover:text-red-400 transition-colors">
-                                    <Trash2 size={16} />
-                                </button>
+                                <DeleteButton table="journal_entries" id={entry.id} redirectTo="/admin/journees" />
                             </div>
 
-                            <p className="text-white text-base leading-relaxed mb-6 whitespace-pre-wrap flex-1">
-                                {entry.content}
-                            </p>
+                            <div
+                                className="text-white/90 text-sm leading-relaxed flex-1 prose prose-invert prose-sm max-w-none"
+                                dangerouslySetInnerHTML={{ __html: entry.content }}
+                            />
 
-                            <div className="mt-auto pt-4 border-t border-white/10 text-right">
-                                <span className="text-xs font-mono text-koudous-text/50">
-                                    {entry.mood_tag || "#Journal"}
-                                </span>
+                            <div className="mt-4 pt-4 border-t border-white/10 flex flex-wrap gap-2">
+                                {(entry.mood_tags || []).map((tag: string) => (
+                                    <span key={tag} className="text-xs font-mono text-koudous-primary border border-koudous-primary/30 px-2 py-0.5 rounded">
+                                        {tag}
+                                    </span>
+                                ))}
                             </div>
                         </div>
                     ))
