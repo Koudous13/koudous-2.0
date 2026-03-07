@@ -19,7 +19,7 @@ export default function NewProjectPage() {
         stack_tags: "", // Sera converti en array
         metrics_json: "{\n  \"Inference\": \"12ms\",\n  \"Data Processed\": \"20M\"\n}",
         is_pro: true,
-        content_html: "",
+        description: "",
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -43,7 +43,7 @@ export default function NewProjectPage() {
                     title: formData.title,
                     slug: formData.slug || formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
                     short_description: formData.short_description,
-                    content_html: formData.content_html,
+                    description: formData.description,
                     cover_image: formData.cover_image,
                     github_link: formData.github_link,
                     stack_tags: tagsArray,
@@ -171,8 +171,8 @@ export default function NewProjectPage() {
                 <div className="space-y-2">
                     <label className="text-sm font-bold text-white">Description Complète (Architecture)</label>
                     <RichTextEditor
-                        content={formData.content_html}
-                        onChange={(html) => setFormData({ ...formData, content_html: html })}
+                        content={formData.description}
+                        onChange={(html) => setFormData({ ...formData, description: html })}
                         placeholder="Détaillez chaque couche de votre architecture système ici..."
                     />
                 </div>

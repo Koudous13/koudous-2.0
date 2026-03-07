@@ -52,11 +52,11 @@ export default async function AdminEchecsPage() {
                                     <td className="px-6 py-4 w-1/3">
                                         <div className="font-bold text-white mb-1">{failure.title}</div>
                                         <div className="text-xs font-mono text-koudous-secondary mb-2">{failure.period}</div>
-                                        <p className="text-sm text-koudous-text/70 line-clamp-2">{failure.the_fact}</p>
+                                        <p className="text-sm text-koudous-text/70 line-clamp-2">{failure.context}</p>
                                     </td>
                                     <td className="px-6 py-4">
                                         <p className="text-sm text-koudous-text italic border-l-2 border-koudous-primary/50 pl-4 py-1">
-                                            "{failure.the_lesson}"
+                                            "{failure.lessons_learned}"
                                         </p>
                                     </td>
                                     <td className="px-6 py-4 text-right align-top">

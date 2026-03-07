@@ -16,8 +16,8 @@ export default function NewArticlePage() {
         excerpt: "",
         category: "IA/Data",
         cover_image: "",
-        is_published: false,
-        content_html: "",
+        published: false,
+        content: "",
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -30,11 +30,11 @@ export default function NewArticlePage() {
                     title: formData.title,
                     slug: formData.slug || formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
                     excerpt: formData.excerpt,
-                    content_html: formData.content_html,
+                    content: formData.content,
                     category: formData.category,
                     cover_image: formData.cover_image,
-                    is_published: formData.is_published,
-                    published_at: formData.is_published ? new Date().toISOString() : null,
+                    published: formData.published,
+                    published_at: formData.published ? new Date().toISOString() : null,
                 }
             ]);
 
@@ -123,8 +123,8 @@ export default function NewArticlePage() {
                         <label className="text-sm font-bold text-white">Contenu Riche (TipTap)</label>
                     </div>
                     <RichTextEditor
-                        content={formData.content_html}
-                        onChange={(html) => setFormData({ ...formData, content_html: html })}
+                        content={formData.content}
+                        onChange={(html) => setFormData({ ...formData, content: html })}
                     />
                 </div>
 
@@ -132,8 +132,8 @@ export default function NewArticlePage() {
                     <input
                         type="checkbox"
                         id="published"
-                        checked={formData.is_published}
-                        onChange={(e) => setFormData({ ...formData, is_published: e.target.checked })}
+                        checked={formData.published}
+                        onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
                         className="w-5 h-5 accent-koudous-primary bg-black/40 border-white/10"
                     />
                     <label htmlFor="published" className="text-white cursor-pointer select-none">

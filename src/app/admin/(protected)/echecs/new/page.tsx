@@ -12,8 +12,8 @@ export default function NewFailurePage() {
     const [formData, setFormData] = useState({
         title: "",
         period: "2024",
-        the_fact: "",
-        the_lesson: "",
+        context: "",
+        lessons_learned: "",
         order_index: 0,
     });
 
@@ -71,8 +71,8 @@ export default function NewFailurePage() {
                     <label className="text-sm font-bold text-white">Le Fait (Brut, sans émotion)</label>
                     <textarea
                         required
-                        value={formData.the_fact}
-                        onChange={(e) => setFormData({ ...formData, the_fact: e.target.value })}
+                        value={formData.context}
+                        onChange={(e) => setFormData({ ...formData, context: e.target.value })}
                         className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-secondary h-24"
                         placeholder="Que s'est-il passé de manière factuelle ?"
                     />
@@ -82,8 +82,8 @@ export default function NewFailurePage() {
                     <label className="text-sm font-bold text-white">La Leçon (La conclusion pour l'algorithme)</label>
                     <textarea
                         required
-                        value={formData.the_lesson}
-                        onChange={(e) => setFormData({ ...formData, the_lesson: e.target.value })}
+                        value={formData.lessons_learned}
+                        onChange={(e) => setFormData({ ...formData, lessons_learned: e.target.value })}
                         className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-secondary h-24 italic"
                         placeholder="Qu'est ce que vous avez configuré pour que ça n'arrive plus ?"
                     />

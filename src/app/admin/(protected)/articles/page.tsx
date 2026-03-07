@@ -70,7 +70,7 @@ export default async function AdminArticlesPage() {
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            {article.is_published ? (
+                                            {article.published ? (
                                                 <span className="flex items-center gap-2 text-green-400 text-sm">
                                                     <span className="w-2 h-2 rounded-full bg-green-400"></span>
                                                     Publié

@@ -11,7 +11,7 @@ export default function NewJournalEntryPage() {
 
     const [formData, setFormData] = useState({
         content: "",
-        mood_tag: "#VibeCoding",
+        mood_tags_input: "#VibeCoding",
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -19,7 +19,15 @@ export default function NewJournalEntryPage() {
         setIsSubmitting(true);
 
         try {
-            const { error } = await supabase.from("journal_entries").insert([formData]);
+            const tagsArray = formData.mood_tags_input
+                .split(',')
+                .map(t => t.trim())
+                .filter(t => t.length > 0);
+
+            const { error } = await supabase.from("journal_entries").insert([{
+                content: formData.content,
+                mood_tags: tagsArray,
+            }]);
             if (error) throw error;
 
             router.push("/admin/journees");
@@ -52,14 +60,14 @@ export default function NewJournalEntryPage() {
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-sm font-bold text-white">Tag (#Mood)</label>
+                    <label className="text-sm font-bold text-white">Tags (séparés par des virgules)</label>
                     <input
                         type="text"
                         required
-                        value={formData.mood_tag}
-                        onChange={(e) => setFormData({ ...formData, mood_tag: e.target.value })}
+                        value={formData.mood_tags_input}
+                        onChange={(e) => setFormData({ ...formData, mood_tags_input: e.target.value })}
                         className="w-full sm:w-1/2 bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white font-mono"
-                        placeholder="#VibeCoding"
+                        placeholder="#VibeCoding, #Build, #IA"
                     />
                 </div>
 
