@@ -34,7 +34,7 @@ export default function EditProjectForm({ project }: { project: any }) {
             if (trimmed && trimmed !== "{}") {
                 metricsParsed = JSON.parse(trimmed);
             }
-            const tagsArray = formData.stack_tags.split(",").map(t => t.trim()).filter(t => t.length > 0);
+            const tagsArray = formData.stack_tags.split(",").map((t: string) => t.trim()).filter((t: string) => t.length > 0);
 
             const { error } = await supabase.from("projects").update({
                 title: formData.title,
