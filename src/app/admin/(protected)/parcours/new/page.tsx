@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import ImageUploader from "@/components/admin/ImageUploader";
 
 export default function NewTimelineStepPage() {
     const router = useRouter();
@@ -105,25 +106,13 @@ export default function NewTimelineStepPage() {
                     />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                        <label className="text-sm font-bold text-white">Image (Logo entreprise / Illustration) URL</label>
-                        <input
-                            type="url"
-                            value={formData.image_url}
-                            onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-primary"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-bold text-white">Ordre (Le plus grand s'affiche en premier)</label>
-                        <input
-                            type="number"
-                            value={formData.order_index}
-                            onChange={(e) => setFormData({ ...formData, order_index: parseInt(e.target.value) })}
-                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-primary font-mono"
-                        />
-                    </div>
+                <div className="space-y-2">
+                    <label className="text-sm font-bold text-white">Image / Logo (Upload depuis votre PC)</label>
+                    <ImageUploader
+                        onUpload={(url) => setFormData({ ...formData, image_url: url })}
+                        currentUrl={formData.image_url}
+                        folder="parcours"
+                    />
                 </div>
 
                 <div className="pt-6 flex justify-end gap-4">

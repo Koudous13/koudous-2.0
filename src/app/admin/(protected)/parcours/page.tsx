@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit } from "lucide-react";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export default async function AdminParcoursPage() {
     const supabase = await createClient();
@@ -65,12 +66,8 @@ export default async function AdminParcoursPage() {
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex items-center justify-end gap-3">
-                                            <Link href={`/admin/parcours/${step.id}/edit`} className="p-2 text-koudous-text/60 hover:text-koudous-primary transition-colors">
-                                                <Edit size={18} />
-                                            </Link>
-                                            <button className="p-2 text-koudous-text/60 hover:text-red-400 transition-colors">
-                                                <Trash2 size={18} />
-                                            </button>
+                                            <Link href={`/admin/parcours/${step.id}/edit`} className="p-2 text-koudous-text/60 hover:text-koudous-primary transition-colors"><Edit size={18} /></Link>
+                                            <DeleteButton table="timeline_steps" id={step.id} redirectTo="/admin/parcours" />
                                         </div>
                                     </td>
                                 </tr>
