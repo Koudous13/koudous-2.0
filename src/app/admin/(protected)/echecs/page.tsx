@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit } from "lucide-react";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export default async function AdminEchecsPage() {
     const supabase = await createClient();
@@ -61,12 +62,8 @@ export default async function AdminEchecsPage() {
                                     </td>
                                     <td className="px-6 py-4 text-right align-top">
                                         <div className="flex items-center justify-end gap-3">
-                                            <Link href={`/admin/echecs/${failure.id}/edit`} className="p-2 text-koudous-text/60 hover:text-koudous-primary transition-colors">
-                                                <Edit size={18} />
-                                            </Link>
-                                            <button className="p-2 text-koudous-text/60 hover:text-red-400 transition-colors">
-                                                <Trash2 size={18} />
-                                            </button>
+                                            <Link href={`/admin/echecs/${failure.id}/edit`} className="p-2 text-koudous-text/60 hover:text-koudous-primary transition-colors"><Edit size={18} /></Link>
+                                            <DeleteButton table="failures" id={failure.id} redirectTo="/admin/echecs" />
                                         </div>
                                     </td>
                                 </tr>

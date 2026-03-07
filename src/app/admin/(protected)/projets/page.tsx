@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { Plus, Edit, Trash2, Eye, Server, Layers } from "lucide-react";
+import { Plus, Edit, Eye, Layers } from "lucide-react";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export default async function AdminProjectsPage() {
     const supabase = await createClient();
@@ -77,9 +78,10 @@ export default async function AdminProjectsPage() {
                                         <Link href={`/projets/${project.slug}`} target="_blank" className="text-koudous-text/60 hover:text-white transition-colors" title="Aperçu">
                                             <Eye size={18} />
                                         </Link>
-                                        <Link href={`/admin/projets/${project.id}/edit`} className="text-koudous-text/60 hover:text-koudous-primary transition-colors" title="Câbler (Éditer)">
+                                        <Link href={`/admin/projets/${project.id}/edit`} className="text-koudous-text/60 hover:text-koudous-primary transition-colors" title="Éditer">
                                             <Edit size={18} />
                                         </Link>
+                                        <DeleteButton table="projects" id={project.id} redirectTo="/admin/projets" />
                                     </div>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import RichTextEditor from "@/components/admin/RichTextEditor";
+import ImageUploader from "@/components/admin/ImageUploader";
 import { createClient } from "@/utils/supabase/client";
 
 export default function NewProjectPage() {

@@ -1,8 +1,9 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { Plus, Edit, Trash2, Eye } from "lucide-react";
+import { Plus, Edit, Eye } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export default async function AdminArticlesPage() {
     const supabase = await createClient();
@@ -93,9 +94,7 @@ export default async function AdminArticlesPage() {
                                                 <Link href={`/admin/articles/${article.id}/edit`} className="p-2 text-koudous-text/60 hover:text-koudous-primary transition-colors" title="Éditer">
                                                     <Edit size={18} />
                                                 </Link>
-                                                <button className="p-2 text-koudous-text/60 hover:text-red-400 transition-colors" title="Supprimer">
-                                                    <Trash2 size={18} />
-                                                </button>
+                                                <DeleteButton table="articles" id={article.id} redirectTo="/admin/articles" />
                                             </div>
                                         </td>
                                     </tr>
