@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import RichTextEditor from "@/components/admin/RichTextEditor";
 import { Loader2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -57,11 +58,17 @@ export default function EditEchecForm({ failure }: { failure: any }) {
                 </div>
                 <div className="space-y-2">
                     <label className="text-sm font-bold text-white">Le Contexte (Le Fait Brut)</label>
-                    <textarea required value={formData.context} onChange={(e) => setFormData({ ...formData, context: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-secondary h-28" />
+                    <RichTextEditor
+                        content={formData.context}
+                        onChange={(html) => setFormData({ ...formData, context: html })}
+                    />
                 </div>
                 <div className="space-y-2">
                     <label className="text-sm font-bold text-white">La Leçon</label>
-                    <textarea required value={formData.lessons_learned} onChange={(e) => setFormData({ ...formData, lessons_learned: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-secondary h-28 italic" />
+                    <RichTextEditor
+                        content={formData.lessons_learned}
+                        onChange={(html) => setFormData({ ...formData, lessons_learned: html })}
+                    />
                 </div>
                 <div className="space-y-2">
                     <label className="text-sm font-bold text-white">Ordre</label>

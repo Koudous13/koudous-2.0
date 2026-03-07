@@ -122,12 +122,11 @@ export default function NewProjectPage() {
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-bold text-white">Image Cover (URL URL Temporaire)</label>
-                            <input
-                                type="url"
-                                value={formData.cover_image}
-                                onChange={(e) => setFormData({ ...formData, cover_image: e.target.value })}
-                                className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-primary"
+                            <label className="text-sm font-bold text-white">Image de Couverture</label>
+                            <ImageUploader
+                                onUpload={(url) => setFormData({ ...formData, cover_image: url })}
+                                currentUrl={formData.cover_image}
+                                folder="projects"
                             />
                         </div>
                     </div>

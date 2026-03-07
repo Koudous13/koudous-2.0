@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import RichTextEditor from "@/components/admin/RichTextEditor";
 
 export default function NewFailurePage() {
     const router = useRouter();
@@ -69,22 +70,18 @@ export default function NewFailurePage() {
 
                 <div className="space-y-2">
                     <label className="text-sm font-bold text-white">Le Fait (Brut, sans émotion)</label>
-                    <textarea
-                        required
-                        value={formData.context}
-                        onChange={(e) => setFormData({ ...formData, context: e.target.value })}
-                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-secondary h-24"
+                    <RichTextEditor
+                        content={formData.context}
+                        onChange={(html) => setFormData({ ...formData, context: html })}
                         placeholder="Que s'est-il passé de manière factuelle ?"
                     />
                 </div>
 
                 <div className="space-y-2">
                     <label className="text-sm font-bold text-white">La Leçon (La conclusion pour l'algorithme)</label>
-                    <textarea
-                        required
-                        value={formData.lessons_learned}
-                        onChange={(e) => setFormData({ ...formData, lessons_learned: e.target.value })}
-                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-secondary h-24 italic"
+                    <RichTextEditor
+                        content={formData.lessons_learned}
+                        onChange={(html) => setFormData({ ...formData, lessons_learned: html })}
                         placeholder="Qu'est ce que vous avez configuré pour que ça n'arrive plus ?"
                     />
                 </div>

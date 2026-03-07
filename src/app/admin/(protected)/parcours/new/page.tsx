@@ -1,9 +1,8 @@
-"use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import ImageUploader from "@/components/admin/ImageUploader";
+import RichTextEditor from "@/components/admin/RichTextEditor";
 
 export default function NewTimelineStepPage() {
     const router = useRouter();
@@ -98,14 +97,12 @@ export default function NewTimelineStepPage() {
 
                 <div className="space-y-2">
                     <label className="text-sm font-bold text-white">Description (Souveraineté et accomplissements)</label>
-                    <textarea
-                        required
-                        value={formData.description}
-                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-koudous-primary h-32"
+                    <RichTextEditor
+                        content={formData.description}
+                        onChange={(html) => setFormData({ ...formData, description: html })}
+                        placeholder="Qu'avez-vous accompli ici ? Détaillez vos actions."
                     />
                 </div>
-
                 <div className="space-y-2">
                     <label className="text-sm font-bold text-white">Image / Logo (Upload depuis votre PC)</label>
                     <ImageUploader
