@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Syne } from "next/font/google";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import "./globals.css";
-
-const inter = Inter({
+import "./globals.css"; const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
 });
@@ -30,11 +26,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${syne.variable} antialiased bg-koudous-bg text-koudous-text min-h-screen flex flex-col selection:bg-koudous-primary selection:text-white`}
       >
-        <Navbar />
-        <main className="flex-grow pt-24 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-          {children}
-        </main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
