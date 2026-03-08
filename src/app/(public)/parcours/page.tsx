@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { Briefcase, GraduationCap, Sparkles } from "lucide-react";
 import { FadeUp, FadeStagger, FadeItem } from "@/components/animations";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
     title: "Parcours — L'Ascension",
@@ -67,8 +68,14 @@ export default async function ParcoursPage() {
                                 />
 
                                 {step.image_url && (
-                                    <div className="mt-6 rounded-lg overflow-hidden border border-white/10 opacity-80 group-hover:opacity-100 transition-opacity">
-                                        <img src={step.image_url} alt={step.title} className="w-full h-auto object-cover max-h-64" />
+                                    <div className="relative w-full h-64 mt-6 rounded-xl overflow-hidden border border-white/10 group">
+                                        <Image
+                                            src={step.image_url}
+                                            alt={step.title}
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                        />
                                     </div>
                                 )}
                             </div>

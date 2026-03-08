@@ -1,10 +1,12 @@
+```typescript
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { ArrowRight, Layers, BrainCircuit, MapPin, ExternalLink, Image as ImgIcon, ChevronRight, Github } from "lucide-react";
-import { FadeUp, FadeStagger, FadeItem, SlideIn } from "@/components/animations";
+import { ArrowRight, Layers, BrainCircuit, MapPin, ExternalLink, Image as ImgIcon, ChevronRight, Github, Code, MessageSquare, Briefcase } from "lucide-react";
+import { FadeUp, FadeStagger, FadeItem, SlideIn, CountUp } from "@/components/animations";
 import type { Metadata } from "next";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import Image from "next/image";
 
 export const revalidate = 60;
 
@@ -56,6 +58,23 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen flex flex-col relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Koudous DAOUDA",
+            "url": "https://koudous-2-0.vercel.app",
+            "image": "https://avatars.githubusercontent.com/Koudous13",
+            "jobTitle": "Data Scientist & Systems Architect",
+            "sameAs": [
+              "https://github.com/Koudous13",
+              "mailto:Koudouspro13@gmail.com"
+            ]
+          })
+        }}
+      />
 
       {/* ─── BACKGROUND GLOW ─── */}
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--color-koudous-secondary)_0%,_transparent_60%)] opacity-[0.04] pointer-events-none z-0" />
@@ -76,11 +95,14 @@ export default async function Home() {
 
         {/* Profile photo */}
         <FadeUp delay={0.05}>
-          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-koudous-primary/40 shadow-[0_0_40px_rgba(255,127,17,0.15)] mb-8 mx-auto bg-gradient-to-br from-koudous-primary/30 to-koudous-secondary/30 flex items-center justify-center">
-            <img
+          <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-koudous-primary/40 shadow-[0_0_40px_rgba(255,127,17,0.15)] mb-8 mx-auto bg-gradient-to-br from-koudous-primary/30 to-koudous-secondary/30 flex items-center justify-center">
+            <Image
               src="https://avatars.githubusercontent.com/Koudous13"
               alt="Koudous DAOUDA"
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 112px, 144px"
+              priority
             />
           </div>
         </FadeUp>
@@ -177,11 +199,17 @@ export default async function Home() {
           <FadeStagger className="grid grid-cols-1 md:grid-cols-3 gap-6" staggerDelay={0.1}>
             {featuredProjects.map((project) => (
               <FadeItem key={project.id}>
-                <Link href={`/projets/${project.slug}`} className="group flex flex-col bg-white/[0.03] border border-white/10 rounded-2xl overflow-hidden hover:border-koudous-primary/50 transition-all duration-300 hover:-translate-y-1 h-full">
+                <Link href={`/ projets / ${ project.slug } `} className="group flex flex-col bg-white/[0.03] border border-white/10 rounded-2xl overflow-hidden hover:border-koudous-primary/50 transition-all duration-300 hover:-translate-y-1 h-full">
                   {/* Cover */}
                   <div className="relative aspect-video bg-black/40 overflow-hidden">
                     {project.cover_image ? (
-                      <img src={project.cover_image} alt={project.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700" />
+                      <Image 
+                        src={project.cover_image} 
+                        alt={project.title} 
+                        fill
+                        className="object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700" 
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-koudous-primary/10 to-koudous-secondary/10">
                         <Layers className="text-koudous-primary/40" size={48} />
@@ -243,11 +271,17 @@ export default async function Home() {
           <div className="space-y-4">
             {latestArticles.map((article, i) => (
               <SlideIn key={article.id} from="left" delay={i * 0.08}>
-                <Link href={`/articles/${article.slug}`} className="group flex flex-col md:flex-row items-start md:items-center gap-6 p-6 bg-white/[0.03] border border-white/10 rounded-2xl hover:border-koudous-secondary/50 hover:bg-white/5 transition-all duration-300">
+                <Link href={`/ articles / ${ article.slug } `} className="group flex flex-col md:flex-row items-start md:items-center gap-6 p-6 bg-white/[0.03] border border-white/10 rounded-2xl hover:border-koudous-secondary/50 hover:bg-white/5 transition-all duration-300">
                   {/* Cover */}
                   {article.cover_image && (
-                    <div className="w-full md:w-32 h-20 rounded-xl overflow-hidden shrink-0 bg-black/40">
-                      <img src={article.cover_image} alt={article.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" />
+                    <div className="relative w-full md:w-32 h-20 rounded-xl overflow-hidden shrink-0 bg-black/40">
+                      <Image 
+                        src={article.cover_image} 
+                        alt={article.title} 
+                        fill
+                        className="object-cover opacity-70 group-hover:opacity-100 transition-opacity" 
+                        sizes="(max-width: 768px) 100vw, 128px"
+                      />
                     </div>
                   )}
                   {/* Text */}
@@ -354,7 +388,13 @@ export default async function Home() {
             {galleryPreviews.map((photo) => (
               <FadeItem key={photo.id}>
                 <Link href="/galerie" className="group relative block aspect-square rounded-xl overflow-hidden bg-white/5">
-                  <img src={photo.image_url} alt={photo.title || "Photo"} className="w-full h-full object-cover opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" loading="lazy" />
+                  <Image 
+                    src={photo.image_url} 
+                    alt={photo.title || "Photo"} 
+                    fill
+                    className="object-cover opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
                     {photo.title && <p className="text-white text-xs font-bold">{photo.title}</p>}
                   </div>

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Github, Activity, CalendarDays, ExternalLink } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import Image from "next/image";
 
 export const revalidate = 60;
 
@@ -45,6 +46,24 @@ export default async function ProjectDetailPage({
 
     return (
         <article className="max-w-5xl mx-auto py-12 md:py-20 px-4 md:px-0">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "SoftwareApplication",
+                        "name": project.title,
+                        "operatingSystem": "Web",
+                        "applicationCategory": "WebApplication",
+                        "description": project.short_description || project.title,
+                        "author": {
+                            "@type": "Person",
+                            "name": "Koudous DAOUDA",
+                            "url": "https://koudous-2-0.vercel.app"
+                        }
+                    })
+                }}
+            />
 
             {/* HEADER SECTION */}
             <header className="mb-16">
@@ -74,9 +93,16 @@ export default async function ProjectDetailPage({
 
             {/* BIG COVER IMAGE */}
             {project.cover_image && (
-                <div className="w-full aspect-video rounded-3xl overflow-hidden border border-white/10 mb-20 bg-black/50 shadow-2xl relative group">
+                <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 mb-20 bg-black/50 shadow-2xl group">
                     <div className="absolute inset-0 bg-koudous-primary/10 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity duration-1000"></div>
-                    <img src={project.cover_image} alt={`Cover - ${project.title}`} className="w-full h-full object-cover filter grayscale-[20%] group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105" />
+                    <Image
+                        src={project.cover_image}
+                        alt={`Cover - ${project.title}`}
+                        fill
+                        className="object-cover filter grayscale-[20%] group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
+                        sizes="(max-width: 1024px) 100vw, 1024px"
+                        priority
+                    />
                 </div>
             )}
 

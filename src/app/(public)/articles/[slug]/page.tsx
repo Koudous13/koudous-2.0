@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import Link from "next/link";
 import { ArrowLeft, BookOpen } from "lucide-react";
+import Image from "next/image";
 
 export const revalidate = 60;
 
@@ -27,8 +28,25 @@ export default async function ArticleDetailPage({
 
     return (
         <article className="max-w-3xl mx-auto py-12 md:py-20 px-4 md:px-0">
-
-            <Link href="/articles" className="inline-flex items-center gap-2 text-koudous-text/60 hover:text-white mb-12 font-mono text-sm transition-colors border-b border-white/10 pb-1">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "TechArticle",
+                        "headline": article.title,
+                        "image": article.cover_image ? [article.cover_image] : [],
+                        "datePublished": article.created_at,
+                        "dateModified": article.updated_at || article.created_at,
+                        "author": {
+                            "@type": "Person",
+                            "name": "Koudous DAOUDA",
+                            "url": "https://koudous-2-0.vercel.app"
+                        }
+                    })
+                }}
+            />
+            {/* HEADER */}<Link href="/articles" className="inline-flex items-center gap-2 text-koudous-text/60 hover:text-white mb-12 font-mono text-sm transition-colors border-b border-white/10 pb-1">
                 <ArrowLeft size={16} /> Retour à l'Index Littéraire
             </Link>
 
@@ -49,8 +67,15 @@ export default async function ArticleDetailPage({
                 </h1>
 
                 {article.cover_image && (
-                    <div className="w-full aspect-video rounded-2xl overflow-hidden border border-white/10 mb-12">
-                        <img src={article.cover_image} alt={article.title} className="w-full h-full object-cover" />
+                    <div className="relative w-full aspect-[21/9] bg-white/5 border border-white/10 rounded-2xl overflow-hidden mb-16 shadow-2xl">
+                        <Image
+                            src={article.cover_image}
+                            alt={article.title}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 768px"
+                            priority
+                        />
                     </div>
                 )}
             </header>
