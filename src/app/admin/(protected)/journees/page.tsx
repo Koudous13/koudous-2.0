@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { Plus, CalendarDays } from "lucide-react";
+import { Plus, CalendarDays, Pencil } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import DeleteButton from "@/components/admin/DeleteButton";
@@ -43,7 +43,16 @@ export default async function AdminJourneesPage() {
                                     <CalendarDays size={16} />
                                     {format(new Date(entry.created_at), "dd MMM yyyy • HH:mm", { locale: fr })}
                                 </div>
-                                <DeleteButton table="journal_entries" id={entry.id} redirectTo="/admin/journees" />
+                                <div className="flex items-center gap-2">
+                                    <Link
+                                        href={`/admin/journees/${entry.id}/edit`}
+                                        className="p-1.5 text-koudous-text/40 hover:text-koudous-primary transition-colors"
+                                        title="Modifier"
+                                    >
+                                        <Pencil size={14} />
+                                    </Link>
+                                    <DeleteButton table="journal_entries" id={entry.id} redirectTo="/admin/journees" />
+                                </div>
                             </div>
 
                             <div
