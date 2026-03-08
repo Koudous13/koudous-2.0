@@ -35,10 +35,10 @@ export default function Footer() {
                                 <a href="#" target="_blank" rel="noopener noreferrer" className="text-koudous-text/60 hover:text-koudous-primary transition-colors">LinkedIn</a>
                             </li>
                             <li>
-                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-koudous-text/60 hover:text-koudous-primary transition-colors">GitHub</a>
+                                <a href="https://github.com/Koudous13" target="_blank" rel="noopener noreferrer" className="text-koudous-text/60 hover:text-koudous-primary transition-colors">GitHub</a>
                             </li>
                             <li>
-                                <a href="mailto:contact@koudous.com" className="text-koudous-text/60 hover:text-koudous-primary transition-colors">Email Direct</a>
+                                <a href="mailto:Koudouspro13@gmail.com" className="text-koudous-text/60 hover:text-koudous-primary transition-colors">Email Direct</a>
                             </li>
                         </ul>
                     </div>
