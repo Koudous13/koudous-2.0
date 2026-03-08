@@ -39,7 +39,7 @@ export default async function Home() {
     { data: timelineSteps },
     { data: galleryPreviews },
   ] = await Promise.all([
-    supabase.from("site_settings").select("hero_text, total_projects, total_articles, total_workflows").limit(1).single(),
+    supabase.from("site_settings").select("hero_text, total_projects, total_articles, total_workflows").limit(1).maybeSingle(),
     supabase.from("projects").select("*", { count: "exact", head: true }).eq("is_pro", true),
     supabase.from("articles").select("*", { count: "exact", head: true }).eq("published", true),
     supabase.from("gallery").select("*", { count: "exact", head: true }),
@@ -76,16 +76,12 @@ export default async function Home() {
 
         {/* Profile photo */}
         <FadeUp delay={0.05}>
-          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-koudous-primary/40 shadow-[0_0_40px_rgba(255,127,17,0.15)] mb-8 mx-auto">
+          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-koudous-primary/40 shadow-[0_0_40px_rgba(255,127,17,0.15)] mb-8 mx-auto bg-gradient-to-br from-koudous-primary/30 to-koudous-secondary/30 flex items-center justify-center">
             <img
-              src="https://avatars.githubusercontent.com/u/Koudous13"
+              src="https://avatars.githubusercontent.com/Koudous13"
               alt="Koudous DAOUDA"
               className="w-full h-full object-cover"
-              onError={(e: any) => { e.target.style.display = 'none'; }}
             />
-            <div className="w-full h-full bg-gradient-to-br from-koudous-primary/30 to-koudous-secondary/30 flex items-center justify-center -mt-full">
-              <span className="font-display font-extrabold text-4xl text-white">K</span>
-            </div>
           </div>
         </FadeUp>
 
