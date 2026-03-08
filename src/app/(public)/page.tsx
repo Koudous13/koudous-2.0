@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { ArrowRight, Layers, BrainCircuit, MapPin, Calendar, ExternalLink, Image as ImgIcon, ChevronRight } from "lucide-react";
+import { ArrowRight, Layers, BrainCircuit, MapPin, ExternalLink, Image as ImgIcon, ChevronRight, Github } from "lucide-react";
 import { FadeUp, FadeStagger, FadeItem, SlideIn } from "@/components/animations";
 import type { Metadata } from "next";
 import { format } from "date-fns";
@@ -64,7 +64,7 @@ export default async function Home() {
       {/* ════════════════════════════════════════════
           SECTION 1 — HERO
       ════════════════════════════════════════════ */}
-      <section className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20 pb-32">
+      <section className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 pb-32">
 
         {/* Status badge */}
         <FadeUp>
@@ -74,11 +74,26 @@ export default async function Home() {
           </div>
         </FadeUp>
 
-        {/* Name */}
+        {/* Profile photo */}
+        <FadeUp delay={0.05}>
+          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-koudous-primary/40 shadow-[0_0_40px_rgba(255,127,17,0.15)] mb-8 mx-auto">
+            <img
+              src="https://avatars.githubusercontent.com/u/Koudous13"
+              alt="Koudous DAOUDA"
+              className="w-full h-full object-cover"
+              onError={(e: any) => { e.target.style.display = 'none'; }}
+            />
+            <div className="w-full h-full bg-gradient-to-br from-koudous-primary/30 to-koudous-secondary/30 flex items-center justify-center -mt-full">
+              <span className="font-display font-extrabold text-4xl text-white">K</span>
+            </div>
+          </div>
+        </FadeUp>
+
+        {/* Name — taille réduite pour ne pas couper les lettres */}
         <FadeUp delay={0.1}>
           <h1 className="font-display font-extrabold leading-none tracking-tighter uppercase mb-0">
-            <span className="block text-[18vw] md:text-[14vw] text-white opacity-95">KOUDOUS</span>
-            <span className="block text-[14vw] md:text-[11vw] text-transparent bg-clip-text bg-gradient-to-br from-koudous-primary via-orange-400 to-koudous-secondary">DAOUDA</span>
+            <span className="block text-[12vw] md:text-[9vw] lg:text-[8vw] text-white opacity-95">KOUDOUS</span>
+            <span className="block text-[10vw] md:text-[7.5vw] lg:text-[6.5vw] text-transparent bg-clip-text bg-gradient-to-br from-koudous-primary via-orange-400 to-koudous-secondary">DAOUDA</span>
           </h1>
         </FadeUp>
 
@@ -96,15 +111,21 @@ export default async function Home() {
           </p>
         </FadeUp>
 
-        {/* CTAs */}
+        {/* CTAs — GitHub au centre */}
         <FadeUp delay={0.45}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/realisations-pro" className="group flex items-center gap-3 px-8 py-4 bg-koudous-primary text-black font-bold uppercase tracking-widest text-sm hover:bg-white transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,127,17,0.4)] hover:-translate-y-0.5">
-              Voir mes Projets
+            <a
+              href="https://github.com/Koudous13"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-3 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-sm hover:bg-koudous-primary transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,127,17,0.4)] hover:-translate-y-0.5"
+            >
+              <Github size={18} />
+              Mon GitHub
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link href="/articles" className="flex items-center gap-3 px-8 py-4 text-white font-bold uppercase tracking-widest text-sm border border-white/20 hover:border-koudous-primary hover:text-koudous-primary transition-all duration-300">
-              Lire mes Articles
+            </a>
+            <Link href="/realisations-pro" className="flex items-center gap-3 px-8 py-4 text-white font-bold uppercase tracking-widest text-sm border border-white/20 hover:border-koudous-primary hover:text-koudous-primary transition-all duration-300">
+              Voir mes Projets
             </Link>
           </div>
         </FadeUp>

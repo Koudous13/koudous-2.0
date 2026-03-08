@@ -6,11 +6,12 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-    { name: "Accueil", href: "/" },
-    { name: "Parcours", href: "/parcours" },
     { name: "Projets Pro", href: "/realisations-pro" },
+    { name: "Académique", href: "/realisations-academiques" },
     { name: "Articles", href: "/articles" },
+    { name: "Parcours", href: "/parcours" },
     { name: "Galerie", href: "/galerie" },
+    { name: "Mes Échecs", href: "/echecs" },
 ];
 
 export default function Navbar() {
@@ -28,8 +29,8 @@ export default function Navbar() {
     return (
         <header
             className={`fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent ${isScrolled
-                    ? "bg-koudous-bg/80 backdrop-blur-md border-koudous-secondary/20 shadow-lg shadow-black/20 py-4"
-                    : "bg-transparent py-6"
+                ? "bg-koudous-bg/80 backdrop-blur-md border-koudous-secondary/20 shadow-lg shadow-black/20 py-4"
+                : "bg-transparent py-6"
                 }`}
         >
             <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
