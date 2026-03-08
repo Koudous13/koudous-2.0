@@ -11,6 +11,7 @@ const navLinks = [
     { name: "Articles", href: "/articles" },
     { name: "Parcours", href: "/parcours" },
     { name: "Galerie", href: "/galerie" },
+    { name: "Mes Journées", href: "/journees" },
     { name: "Mes Échecs", href: "/echecs" },
 ];
 
