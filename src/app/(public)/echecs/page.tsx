@@ -2,6 +2,13 @@ import { createClient } from "@/utils/supabase/server";
 import { AlertTriangle, TrendingUp } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { FadeUp } from "@/components/animations";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Mes Échecs — Le Registre",
+    description: "Cicatrices d'architecte. Les erreurs monumentales, les systèmes effondrés et les leçons de guerre brutes de Koudous DAOUDA.",
+};
 
 export const revalidate = 60;
 
@@ -15,14 +22,16 @@ export default async function EchecsPage() {
 
     return (
         <div className="max-w-4xl mx-auto py-12">
-            <div className="mb-20 text-center">
-                <h1 className="text-5xl md:text-8xl font-display font-extrabold text-white mb-6">
-                    Mes Échecs<span className="text-red-500">.</span>
-                </h1>
-                <p className="text-xl text-koudous-text/70 max-w-2xl mx-auto font-sans">
-                    Cicatrices d'architecte. Les erreurs monumentales, les systèmes effondrés et les leçons de guerre brutes.
-                </p>
-            </div>
+            <FadeUp>
+                <div className="mb-20 text-center">
+                    <h1 className="text-5xl md:text-8xl font-display font-extrabold text-white mb-6">
+                        Mes Échecs<span className="text-red-500">.</span>
+                    </h1>
+                    <p className="text-xl text-koudous-text/70 max-w-2xl mx-auto font-sans">
+                        Cicatrices d'architecte. Les erreurs monumentales, les systèmes effondrés et les leçons de guerre brutes.
+                    </p>
+                </div>
+            </FadeUp>
 
             <div className="space-y-12">
                 {echecs?.map((echec) => (
@@ -48,9 +57,10 @@ export default async function EchecsPage() {
 
                                 <div className="mb-8">
                                     <h3 className="font-mono tracking-widest uppercase text-xs text-koudous-text/40 mb-2">Le Contexte / Le Crash</h3>
-                                    <p className="text-koudous-text/80 leading-relaxed bg-black/50 p-6 rounded-xl border border-white/5">
-                                        {echec.context}
-                                    </p>
+                                    <div
+                                        className="text-koudous-text/80 leading-relaxed bg-black/50 p-6 rounded-xl border border-white/5 prose prose-invert prose-sm max-w-none"
+                                        dangerouslySetInnerHTML={{ __html: echec.context || "" }}
+                                    />
                                 </div>
 
                                 <div>

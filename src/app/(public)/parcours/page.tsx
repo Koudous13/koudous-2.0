@@ -1,7 +1,14 @@
 import { createClient } from "@/utils/supabase/server";
 import { Briefcase, GraduationCap, Sparkles } from "lucide-react";
+import { FadeUp, FadeStagger, FadeItem } from "@/components/animations";
+import type { Metadata } from "next";
 
-export const revalidate = 60; // Revalidate every minute
+export const metadata: Metadata = {
+    title: "Parcours — L'Ascension",
+    description: "Timeline de Koudous DAOUDA : trajectoire académique, professionnelle et personnelle vers la souveraineté architecturale.",
+};
+
+export const revalidate = 60;
 
 export default async function ParcoursPage() {
     const supabase = await createClient();
@@ -13,14 +20,16 @@ export default async function ParcoursPage() {
 
     return (
         <div className="max-w-4xl mx-auto py-12">
-            <div className="mb-16 text-center">
-                <h1 className="text-5xl md:text-7xl font-display font-extrabold text-white mb-6 tracking-tight">
-                    L'Ascension.
-                </h1>
-                <p className="text-xl text-koudous-text/70 max-w-2xl mx-auto font-sans leading-relaxed">
-                    Trajectoire algorithmique. De la théorie académique à la souveraineté architecturale en production.
-                </p>
-            </div>
+            <FadeUp>
+                <div className="mb-16 text-center">
+                    <h1 className="text-5xl md:text-7xl font-display font-extrabold text-white mb-6 tracking-tight">
+                        L'Ascension.
+                    </h1>
+                    <p className="text-xl text-koudous-text/70 max-w-2xl mx-auto font-sans leading-relaxed">
+                        Trajectoire algorithmique. De la théorie académique à la souveraineté architecturale en production.
+                    </p>
+                </div>
+            </FadeUp>
 
             <div className="relative border-l-2 border-koudous-secondary/20 ml-4 md:ml-12 space-y-16 pb-12">
                 {steps?.map((step, index) => (
@@ -52,9 +61,10 @@ export default async function ParcoursPage() {
                                 <h3 className="text-2xl font-display font-bold text-white mb-4">
                                     {step.title}
                                 </h3>
-                                <p className="text-koudous-text/80 leading-relaxed whitespace-pre-wrap">
-                                    {step.description}
-                                </p>
+                                <div
+                                    className="text-koudous-text/80 leading-relaxed prose prose-invert prose-sm max-w-none"
+                                    dangerouslySetInnerHTML={{ __html: step.description || "" }}
+                                />
 
                                 {step.image_url && (
                                     <div className="mt-6 rounded-lg overflow-hidden border border-white/10 opacity-80 group-hover:opacity-100 transition-opacity">

@@ -3,8 +3,15 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { PenTool, ArrowRight } from "lucide-react";
+import { FadeUp, FadeStagger, FadeItem } from "@/components/animations";
+import type { Metadata } from "next";
 
-export const revalidate = 60; // 1 minute cache
+export const metadata: Metadata = {
+    title: "Articles & Codex",
+    description: "Analyses techniques, architectures logicielles et réflexions sur l'automatisation et l'IA par Koudous DAOUDA.",
+};
+
+export const revalidate = 60;
 
 export default async function ArticlesPage() {
     const supabase = await createClient();
@@ -21,14 +28,16 @@ export default async function ArticlesPage() {
 
     return (
         <div className="max-w-4xl mx-auto py-12">
-            <div className="mb-20 text-center">
-                <h1 className="text-5xl md:text-8xl font-display font-extrabold text-white mb-6">
-                    Littérature<span className="text-koudous-primary">.</span>
-                </h1>
-                <p className="text-xl text-koudous-text/70 max-w-2xl mx-auto font-sans">
-                    Codex technique, architecture logicielle et réflexions sur l'automatisation.
-                </p>
-            </div>
+            <FadeUp>
+                <div className="mb-20 text-center">
+                    <h1 className="text-5xl md:text-8xl font-display font-extrabold text-white mb-6">
+                        Littérature<span className="text-koudous-primary">.</span>
+                    </h1>
+                    <p className="text-xl text-koudous-text/70 max-w-2xl mx-auto font-sans">
+                        Codex technique, architecture logicielle et réflexions sur l'automatisation.
+                    </p>
+                </div>
+            </FadeUp>
 
             <div className="space-y-12">
                 {articles?.map((article) => (
