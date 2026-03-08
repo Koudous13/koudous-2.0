@@ -24,7 +24,8 @@ export default function GaleriePage() {
         supabase
             .from("gallery")
             .select("*")
-            .order("order_index", { ascending: true })
+            .order("created_at", { ascending: false })
+
             .then(({ data }) => {
                 setItems(data || []);
                 setFiltered(data || []);
@@ -73,8 +74,8 @@ export default function GaleriePage() {
                             key={cat}
                             onClick={() => filterByCategory(cat)}
                             className={`px-4 py-2 rounded-full font-mono text-xs uppercase tracking-widest transition-all border ${activeCategory === cat
-                                    ? "bg-koudous-primary text-black border-koudous-primary font-bold"
-                                    : "border-white/20 text-koudous-text/60 hover:border-white/40 hover:text-white"
+                                ? "bg-koudous-primary text-black border-koudous-primary font-bold"
+                                : "border-white/20 text-koudous-text/60 hover:border-white/40 hover:text-white"
                                 }`}
                         >
                             {cat}

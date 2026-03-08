@@ -77,7 +77,6 @@ export default function NewGaleriePage() {
                     image_url: publicUrl,
                     title: item.title || null,
                     category: item.category,
-                    order_index: i,
                 }]);
                 if (dbError) throw dbError;
 

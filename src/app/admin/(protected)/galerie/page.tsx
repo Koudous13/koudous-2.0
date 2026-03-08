@@ -9,7 +9,7 @@ export default async function AdminGaleriePage() {
     const { data: items } = await supabase
         .from("gallery")
         .select("*")
-        .order("order_index", { ascending: true });
+        .order("created_at", { ascending: false });
 
     return (
         <div>
