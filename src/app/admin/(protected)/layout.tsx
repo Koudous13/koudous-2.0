@@ -9,6 +9,7 @@ import {
     Image as ImageIcon,
     AlertTriangle,
     History,
+    CalendarDays,
     Settings,
     LogOut
 } from "lucide-react";
@@ -31,6 +32,7 @@ export default async function AdminLayout({
         { label: "Articles & Logs", href: "/admin/articles", icon: FileText },
         { label: "Projets & Archi", href: "/admin/projets", icon: Briefcase },
         { label: "Timeline (Parcours)", href: "/admin/parcours", icon: History },
+        { label: "Mes Journées", href: "/admin/journees", icon: CalendarDays },
         { label: "Galerie", href: "/admin/galerie", icon: ImageIcon },
         { label: "Échecs Marquant", href: "/admin/echecs", icon: AlertTriangle },
         { label: "Réglages", href: "/admin/settings", icon: Settings },
