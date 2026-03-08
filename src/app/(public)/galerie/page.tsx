@@ -20,19 +20,21 @@ export default function GaleriePage() {
     const [loading, setLoading] = useState(true);
     const supabase = createClient();
 
+    // Fetch once on mount only
     useEffect(() => {
         supabase
             .from("gallery")
             .select("*")
             .order("created_at", { ascending: false })
-
             .then(({ data }) => {
                 setItems(data || []);
                 setFiltered(data || []);
                 setLoading(false);
             });
+    }, []); // ← empty deps: runs once, never resets the filter
 
-        // Keyboard navigation for lightbox
+    // Keyboard navigation for lightbox (separate effect)
+    useEffect(() => {
         const handleKey = (e: KeyboardEvent) => {
             if (lightboxIndex === null) return;
             if (e.key === "Escape") setLightboxIndex(null);
