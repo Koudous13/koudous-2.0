@@ -5,7 +5,7 @@ import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import { Bold, Italic, Strikethrough, Code, Heading1, Heading2, Heading3, List, ListOrdered, Quote, Undo, Redo, ImageIcon, Link as LinkIcon, Loader2 } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
 
 interface RichTextEditorProps {
@@ -84,6 +84,12 @@ const MenuBar = ({ editor }: { editor: any }) => {
 };
 
 export default function RichTextEditor({ content, onChange, placeholder = "Rédiger ici..." }: RichTextEditorProps) {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -98,6 +104,14 @@ export default function RichTextEditor({ content, onChange, placeholder = "Rédi
         },
         onUpdate: ({ editor }) => { onChange(editor.getHTML()); },
     });
+
+    if (!mounted) {
+        return (
+            <div className="border border-white/10 rounded-lg bg-white/5 overflow-hidden min-h-[300px] flex items-center justify-center">
+                <Loader2 className="animate-spin text-koudous-primary/50" />
+            </div>
+        );
+    }
 
     return (
         <div className="border border-white/10 rounded-lg bg-white/5 overflow-hidden">

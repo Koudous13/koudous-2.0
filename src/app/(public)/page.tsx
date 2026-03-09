@@ -1,4 +1,3 @@
-```typescript
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { ArrowRight, Layers, BrainCircuit, MapPin, ExternalLink, Image as ImgIcon, ChevronRight, Github, Code, MessageSquare, Briefcase } from "lucide-react";
@@ -199,15 +198,15 @@ export default async function Home() {
           <FadeStagger className="grid grid-cols-1 md:grid-cols-3 gap-6" staggerDelay={0.1}>
             {featuredProjects.map((project) => (
               <FadeItem key={project.id}>
-                <Link href={`/ projets / ${ project.slug } `} className="group flex flex-col bg-white/[0.03] border border-white/10 rounded-2xl overflow-hidden hover:border-koudous-primary/50 transition-all duration-300 hover:-translate-y-1 h-full">
+                <Link href={`/projets/${project.slug}`} className="group flex flex-col bg-white/[0.03] border border-white/10 rounded-2xl overflow-hidden hover:border-koudous-primary/50 transition-all duration-300 hover:-translate-y-1 h-full">
                   {/* Cover */}
                   <div className="relative aspect-video bg-black/40 overflow-hidden">
                     {project.cover_image ? (
-                      <Image 
-                        src={project.cover_image} 
-                        alt={project.title} 
+                      <Image
+                        src={project.cover_image}
+                        alt={project.title}
                         fill
-                        className="object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700" 
+                        className="object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700"
                         sizes="(max-width: 768px) 100vw, 33vw"
                       />
                     ) : (
@@ -271,15 +270,15 @@ export default async function Home() {
           <div className="space-y-4">
             {latestArticles.map((article, i) => (
               <SlideIn key={article.id} from="left" delay={i * 0.08}>
-                <Link href={`/ articles / ${ article.slug } `} className="group flex flex-col md:flex-row items-start md:items-center gap-6 p-6 bg-white/[0.03] border border-white/10 rounded-2xl hover:border-koudous-secondary/50 hover:bg-white/5 transition-all duration-300">
+                <Link href={`/ articles / ${article.slug} `} className="group flex flex-col md:flex-row items-start md:items-center gap-6 p-6 bg-white/[0.03] border border-white/10 rounded-2xl hover:border-koudous-secondary/50 hover:bg-white/5 transition-all duration-300">
                   {/* Cover */}
                   {article.cover_image && (
                     <div className="relative w-full md:w-32 h-20 rounded-xl overflow-hidden shrink-0 bg-black/40">
-                      <Image 
-                        src={article.cover_image} 
-                        alt={article.title} 
+                      <Image
+                        src={article.cover_image}
+                        alt={article.title}
                         fill
-                        className="object-cover opacity-70 group-hover:opacity-100 transition-opacity" 
+                        className="object-cover opacity-70 group-hover:opacity-100 transition-opacity"
                         sizes="(max-width: 768px) 100vw, 128px"
                       />
                     </div>
@@ -388,11 +387,11 @@ export default async function Home() {
             {galleryPreviews.map((photo) => (
               <FadeItem key={photo.id}>
                 <Link href="/galerie" className="group relative block aspect-square rounded-xl overflow-hidden bg-white/5">
-                  <Image 
-                    src={photo.image_url} 
-                    alt={photo.title || "Photo"} 
+                  <Image
+                    src={photo.image_url}
+                    alt={photo.title || "Photo"}
                     fill
-                    className="object-cover opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
+                    className="object-cover opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                     sizes="(max-width: 768px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
