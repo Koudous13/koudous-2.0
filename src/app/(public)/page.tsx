@@ -12,6 +12,7 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Koudous DAOUDA — AI & Automation Pioneer",
   description: "Je conçois et déploie des systèmes intelligents et des architectures d'automatisation de pointe. Découvrez mes projets, articles et parcours.",
+  verification: { google: "tTX2xPfdQdOttFP0z0aFmSX3dGGOBXSBMeGGBW3utRI" },
   openGraph: {
     title: "Koudous DAOUDA — AI & Automation Pioneer",
     description: "Systèmes IA, automatisation et architectures souveraines. L'excellence technique sans compromis.",
