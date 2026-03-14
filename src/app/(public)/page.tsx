@@ -444,6 +444,36 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* ─── JOURNEE SPOTLIGHT (FAB) ─── */}
+      <JourneePulse count={journalCount || 0} />
     </main>
+  );
+}
+
+function JourneePulse({ count }: { count: number }) {
+  return (
+    <div className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100]">
+      <Link href="/journees" className="relative group flex items-center gap-3">
+        {/* Pulsing rings */}
+        <div className="absolute inset-0 bg-koudous-primary/40 rounded-full animate-ping scale-150 opacity-20" />
+        <div className="absolute inset-0 bg-koudous-primary/30 rounded-full animate-pulse scale-125 opacity-40" />
+        
+        {/* Label (hidden on mobile, visible on group hover) */}
+        <div className="absolute right-full mr-4 bg-white text-black px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 pointer-events-none hidden md:block border-2 border-koudous-primary shadow-[0_0_20px_rgba(255,127,17,0.3)]">
+          Ma Journée en Direct <span className="ml-2 text-[10px] bg-black text-koudous-primary px-1.5 py-0.5 rounded-full">{count} Logs</span>
+        </div>
+
+        {/* The Button */}
+        <div className="relative w-14 h-14 md:w-16 md:h-16 flex items-center justify-center bg-black border-2 border-koudous-primary rounded-full shadow-[0_0_30px_rgba(255,127,17,0.5)] group-hover:scale-110 group-active:scale-95 transition-all duration-300">
+          <MessageSquare className="text-koudous-primary group-hover:text-white transition-colors" size={24} />
+          
+          {/* Status badge */}
+          <div className="absolute -top-1 -right-1 flex h-4 w-4">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-4 w-4 bg-koudous-primary"></span>
+          </div>
+        </div>
+      </Link>
+    </div>
   );
 }
