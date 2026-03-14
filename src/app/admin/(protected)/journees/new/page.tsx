@@ -5,12 +5,15 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import Link from "next/link";
-import { ArrowLeft, Send, Loader2 } from "lucide-react";
+import { ArrowLeft, Send, Loader2, Eye, PenTool, Clock } from "lucide-react";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 export default function NewJournalEntryPage() {
     const router = useRouter();
     const supabase = createClient();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPreview, setShowPreview] = useState(false);
     const [content, setContent] = useState("");
     const [tagsInput, setTagsInput] = useState("#VibeCoding");
 
@@ -35,16 +38,35 @@ export default function NewJournalEntryPage() {
 
     return (
         <div className="max-w-3xl">
-            <div className="flex items-center gap-4 mb-8">
-                <Link href="/admin/journees" className="p-2 text-koudous-text/50 hover:text-white transition-colors">
-                    <ArrowLeft size={20} />
-                </Link>
-                <div>
-                    <h1 className="text-3xl font-display font-bold text-white">Nouveau Log</h1>
-                    <p className="text-koudous-text/60 mt-1">Micro-blogging : rapide, concis, direct.</p>
+            <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-4">
+                    <Link href="/admin/journees" className="p-2 text-koudous-text/50 hover:text-white transition-colors">
+                        <ArrowLeft size={20} />
+                    </Link>
+                    <div>
+                        <h1 className="text-3xl font-display font-bold text-white">Nouveau Log</h1>
+                        <p className="text-koudous-text/60 mt-1">Micro-blogging : rapide, concis, direct.</p>
+                    </div>
+                </div>
+                <div className="flex bg-white/5 border border-white/10 rounded-lg p-1">
+                    <button 
+                        type="button"
+                        onClick={() => setShowPreview(false)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${!showPreview ? "bg-koudous-primary text-black" : "text-koudous-text/60 hover:text-white"}`}
+                    >
+                        <PenTool size={16} /> Édition
+                    </button>
+                    <button 
+                        type="button"
+                        onClick={() => setShowPreview(true)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${showPreview ? "bg-koudous-primary text-black" : "text-koudous-text/60 hover:text-white"}`}
+                    >
+                        <Eye size={16} /> Aperçu
+                    </button>
                 </div>
             </div>
 
+            {!showPreview ? (
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
                     <div className="space-y-2">
@@ -82,6 +104,34 @@ export default function NewJournalEntryPage() {
                     </button>
                 </div>
             </form>
+            ) : (
+                <div className="bg-white/5 border border-white/10 p-8 rounded-2xl">
+                    <div className="group relative pl-8 md:pl-12 border-l border-white/10">
+                        <div className="absolute left-[-5px] top-6 w-2.5 h-2.5 rounded-full bg-koudous-primary shadow-[0_0_10px_var(--color-koudous-primary)]"></div>
+                        <div className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-2xl">
+                            <header className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                                <div className="flex items-center gap-2 text-koudous-primary font-mono text-sm tracking-widest font-bold">
+                                    <Clock size={16} />
+                                    <time>
+                                        {format(new Date(), "dd MMM yyyy '::' HH:mm", { locale: fr })}
+                                    </time>
+                                </div>
+                                <div className="flex gap-2">
+                                    {tagsInput.split(",").map(t => t.trim()).filter(t => t.length > 0).map((tag) => (
+                                        <span key={tag} className="px-2 py-0.5 bg-black/50 border border-white/20 text-koudous-text/60 text-xs rounded uppercase font-mono tracking-wider">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </header>
+                            <div
+                                className="prose prose-invert prose-p:text-koudous-text/90 prose-p:leading-relaxed prose-a:text-koudous-secondary"
+                                dangerouslySetInnerHTML={{ __html: content || "<p class='opacity-40 italic'>Le contenu du log s'affichera ici...</p>" }}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

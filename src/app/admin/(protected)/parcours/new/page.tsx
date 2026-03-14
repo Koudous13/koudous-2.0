@@ -5,11 +5,14 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import ImageUploader from "@/components/admin/ImageUploader";
 import RichTextEditor from "@/components/admin/RichTextEditor";
+import { Eye, PenTool, ArrowLeft, Briefcase, GraduationCap, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 export default function NewTimelineStepPage() {
     const router = useRouter();
     const supabase = createClient();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPreview, setShowPreview] = useState(false);
 
     const [formData, setFormData] = useState({
         title: "",
@@ -42,11 +45,33 @@ export default function NewTimelineStepPage() {
 
     return (
         <div className="max-w-3xl">
-            <div className="mb-8">
-                <h1 className="text-3xl font-display font-bold text-white">Nouvelle Étape de Parcours</h1>
-                <p className="text-koudous-text/60">Ajouter une nouvelle brique à la timeline.</p>
+            <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-4">
+                    <Link href="/admin/parcours" className="p-2 text-koudous-text/50 hover:text-white transition-colors"><ArrowLeft size={20} /></Link>
+                    <div>
+                        <h1 className="text-3xl font-display font-bold text-white">Nouvelle Étape de Parcours</h1>
+                        <p className="text-koudous-text/60">Ajouter une nouvelle brique à la timeline.</p>
+                    </div>
+                </div>
+                <div className="flex bg-white/5 border border-white/10 rounded-lg p-1">
+                    <button 
+                        type="button"
+                        onClick={() => setShowPreview(false)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${!showPreview ? "bg-koudous-primary text-black" : "text-koudous-text/60 hover:text-white"}`}
+                    >
+                        <PenTool size={16} /> Édition
+                    </button>
+                    <button 
+                        type="button"
+                        onClick={() => setShowPreview(true)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${showPreview ? "bg-koudous-primary text-black" : "text-koudous-text/60 hover:text-white"}`}
+                    >
+                        <Eye size={16} /> Aperçu
+                    </button>
+                </div>
             </div>
 
+            {!showPreview ? (
             <form onSubmit={handleSubmit} className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-6">
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -123,6 +148,50 @@ export default function NewTimelineStepPage() {
                     </button>
                 </div>
             </form>
+            ) : (
+                <div className="bg-white/5 border border-white/10 p-8 md:p-12 rounded-2xl">
+                    <div className="relative border-l-2 border-koudous-secondary/20 ml-4 space-y-16">
+                        <div className="relative pl-8 md:pl-16">
+                            <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-koudous-bg border-2 border-koudous-primary flex items-center justify-center">
+                                <div className="w-1.5 h-1.5 rounded-full bg-koudous-primary" />
+                            </div>
+
+                            <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
+                                <div className="md:w-1/3 pt-1 flex flex-col items-start">
+                                    <span className="font-mono text-lg text-koudous-primary font-bold mb-1">
+                                        {formData.period || "2000 - 2024"}
+                                    </span>
+                                    <span className="text-sm font-bold text-white bg-white/10 px-3 py-1 rounded-full mb-3 flex items-center gap-2">
+                                        {formData.category === 'Professionnel' && <Briefcase size={14} />}
+                                        {formData.category === 'Académique' && <GraduationCap size={14} />}
+                                        {formData.category === 'Personnel' && <Sparkles size={14} />}
+                                        {formData.category}
+                                    </span>
+                                    <span className="text-sm text-koudous-text/60 font-medium">
+                                        {formData.location}
+                                    </span>
+                                </div>
+
+                                <div className="md:w-2/3">
+                                    <h3 className="text-2xl font-display font-bold text-white mb-4">
+                                        {formData.title || "Titre de l'événement"}
+                                    </h3>
+                                    <div
+                                        className="text-koudous-text/80 leading-relaxed prose prose-invert prose-sm max-w-none"
+                                        dangerouslySetInnerHTML={{ __html: formData.description || "<p class='text-koudous-text/40 italic'>La description s'affichera ici...</p>" }}
+                                    />
+
+                                    {formData.image_url && (
+                                        <div className="relative w-full h-48 mt-6 rounded-xl overflow-hidden border border-white/10">
+                                            <img src={formData.image_url} alt="Step preview" className="w-full h-full object-cover" />
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

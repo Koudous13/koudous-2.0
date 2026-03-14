@@ -5,13 +5,14 @@ import { useRouter } from "next/navigation";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import ImageUploader from "@/components/admin/ImageUploader";
 import { createClient } from "@/utils/supabase/client";
-import { Loader2, ArrowLeft } from "lucide-react";
+import { Loader2, ArrowLeft, Eye, PenTool, Activity } from "lucide-react";
 import Link from "next/link";
 
 export default function EditProjectForm({ project }: { project: any }) {
     const router = useRouter();
     const supabase = createClient();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPreview, setShowPreview] = useState(false);
 
     const [formData, setFormData] = useState({
         title: project.title || "",
@@ -60,14 +61,33 @@ export default function EditProjectForm({ project }: { project: any }) {
 
     return (
         <div className="max-w-4xl">
-            <div className="flex items-center gap-4 mb-8">
-                <Link href="/admin/projets" className="p-2 text-koudous-text/50 hover:text-white transition-colors"><ArrowLeft size={20} /></Link>
-                <div>
-                    <h1 className="text-3xl font-display font-bold text-white">Modifier le Projet</h1>
-                    <p className="text-koudous-text/60 font-mono text-xs mt-1">ID: {project.id}</p>
+            <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-4">
+                    <Link href="/admin/projets" className="p-2 text-koudous-text/50 hover:text-white transition-colors"><ArrowLeft size={20} /></Link>
+                    <div>
+                        <h1 className="text-3xl font-display font-bold text-white">Modifier l'Architecture</h1>
+                        <p className="text-koudous-text/60 font-mono text-xs mt-1">ID: {project.id}</p>
+                    </div>
+                </div>
+                <div className="flex bg-white/5 border border-white/10 rounded-lg p-1">
+                    <button 
+                        type="button"
+                        onClick={() => setShowPreview(false)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${!showPreview ? "bg-koudous-primary text-black" : "text-koudous-text/60 hover:text-white"}`}
+                    >
+                        <PenTool size={16} /> Édition
+                    </button>
+                    <button 
+                        type="button"
+                        onClick={() => setShowPreview(true)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${showPreview ? "bg-koudous-primary text-black" : "text-koudous-text/60 hover:text-white"}`}
+                    >
+                        <Eye size={16} /> Aperçu
+                    </button>
                 </div>
             </div>
 
+            {!showPreview ? (
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
                     <h3 className="font-bold text-xl border-b border-white/10 pb-2">Image de Couverture</h3>
@@ -129,6 +149,47 @@ export default function EditProjectForm({ project }: { project: any }) {
                     </button>
                 </div>
             </form>
+            ) : (
+                <div className="bg-white/5 border border-white/10 p-8 md:p-12 rounded-2xl">
+                    <div className="max-w-5xl mx-auto">
+                        <header className="mb-16">
+                            <div className="flex flex-wrap items-center gap-4 mb-6">
+                                <span className={`px-4 py-1.5 uppercase tracking-widest text-xs font-bold rounded-full border ${formData.is_pro ? 'bg-koudous-primary/20 text-koudous-primary border-koudous-primary/30' : 'bg-koudous-secondary/20 text-koudous-secondary border-koudous-secondary/30'}`}>
+                                    {formData.is_pro ? "Souveraineté Pro" : "Recherche Académique"}
+                                </span>
+                            </div>
+
+                            <h1 className="text-5xl md:text-7xl font-display font-extrabold text-white mb-8 tracking-tighter leading-[1.1]">
+                                {formData.title || "Titre du Projet"}
+                            </h1>
+                        </header>
+
+                        {formData.cover_image && (
+                            <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 mb-20 bg-black/50">
+                                <img src={formData.cover_image} alt="Cover" className="w-full h-full object-cover" />
+                            </div>
+                        )}
+
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+                            <div className="lg:col-span-4">
+                                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
+                                    <h3 className="flex items-center gap-2 font-display font-bold text-lg text-white mb-6 uppercase tracking-widest border-b border-white/10 pb-2">
+                                        <Activity size={18} className="text-koudous-primary" /> Metrics
+                                    </h3>
+                                    <p className="text-xs text-koudous-text/40 italic">Aperçu statique des données.</p>
+                                </div>
+                            </div>
+                            <div className="lg:col-span-8">
+                                <h2 className="text-3xl font-display font-bold text-white mb-6 border-l-4 border-koudous-secondary pl-4">Architecture</h2>
+                                <div 
+                                    className="prose prose-invert prose-lg max-w-none prose-p:text-koudous-text/80 prose-headings:font-display prose-headings:text-white prose-a:text-koudous-primary"
+                                    dangerouslySetInnerHTML={{ __html: formData.content || formData.description || "" }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
