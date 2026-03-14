@@ -6,13 +6,14 @@ import RichTextEditor from "@/components/admin/RichTextEditor";
 import ImageUploader from "@/components/admin/ImageUploader";
 import { createClient } from "@/utils/supabase/client";
 import { generateSlug } from "@/utils/slugify";
-import { Loader2, ArrowLeft } from "lucide-react";
+import { Loader2, ArrowLeft, Eye, PenTool } from "lucide-react";
 import Link from "next/link";
 
 export default function NewArticlePage() {
     const router = useRouter();
     const supabase = createClient();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPreview, setShowPreview] = useState(false);
     const [projects, setProjects] = useState<any[]>([]);
 
     const [formData, setFormData] = useState({
@@ -69,14 +70,31 @@ export default function NewArticlePage() {
 
     return (
         <div className="max-w-4xl">
-            <div className="flex items-center gap-4 mb-8">
-                <Link href="/admin/articles" className="p-2 text-koudous-text/50 hover:text-white transition-colors"><ArrowLeft size={20} /></Link>
-                <div>
-                    <h1 className="text-3xl font-display font-bold text-white">Nouvel Article</h1>
-                    <p className="text-koudous-text/60">Rédigez votre prochaine masterclass ou journal de bord.</p>
+            <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-4">
+                    <Link href="/admin/articles" className="p-2 text-koudous-text/50 hover:text-white transition-colors"><ArrowLeft size={20} /></Link>
+                    <div>
+                        <h1 className="text-3xl font-display font-bold text-white">Nouvel Article</h1>
+                        <p className="text-koudous-text/60">Rédigez votre prochaine masterclass ou journal de bord.</p>
+                    </div>
+                </div>
+                <div className="flex bg-white/5 border border-white/10 rounded-lg p-1">
+                    <button 
+                        onClick={() => setShowPreview(false)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${!showPreview ? "bg-koudous-primary text-black" : "text-koudous-text/60 hover:text-white"}`}
+                    >
+                        <PenTool size={16} /> Édition
+                    </button>
+                    <button 
+                        onClick={() => setShowPreview(true)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${showPreview ? "bg-koudous-primary text-black" : "text-koudous-text/60 hover:text-white"}`}
+                    >
+                        <Eye size={16} /> Aperçu
+                    </button>
                 </div>
             </div>
 
+            {!showPreview ? (
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Cover image */}
                 <div className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-4">
@@ -186,6 +204,33 @@ export default function NewArticlePage() {
                     </button>
                 </div>
             </form>
+            ) : (
+                <div className="bg-white/5 border border-white/10 p-8 md:p-12 rounded-xl">
+                    <div className="max-w-3xl mx-auto">
+                        <header className="mb-16">
+                            <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white leading-tight mb-8">
+                                {formData.title || "Titre de l'article"}
+                            </h1>
+                            {formData.cover_image && (
+                                <div className="relative w-full aspect-[21/9] bg-black/40 border border-white/10 rounded-2xl overflow-hidden mb-16 shadow-2xl">
+                                    <img src={formData.cover_image} alt="Couverture" className="w-full h-full object-cover opacity-80" />
+                                </div>
+                            )}
+                        </header>
+                        <div
+                            className="prose prose-invert prose-lg max-w-none 
+                            prose-p:text-koudous-text/90 prose-p:leading-relaxed 
+                            prose-headings:font-display prose-headings:text-white 
+                            prose-a:text-koudous-primary prose-a:no-underline hover:prose-a:underline
+                            prose-img:rounded-xl prose-img:border prose-img:border-white/10
+                            prose-pre:bg-black/60 prose-pre:border prose-pre:border-white/10
+                            prose-code:text-koudous-secondary prose-code:bg-koudous-secondary/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+                            prose-blockquote:border-l-4 prose-blockquote:border-koudous-primary prose-blockquote:bg-koudous-primary/5 prose-blockquote:py-2 prose-blockquote:pl-6 prose-blockquote:italic"
+                            dangerouslySetInnerHTML={{ __html: formData.content || "<p class='text-koudous-text/40 italic'>Le contenu de l'article s'affichera ici...</p>" }}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

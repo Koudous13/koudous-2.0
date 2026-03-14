@@ -4,7 +4,8 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
-import { Bold, Italic, Strikethrough, Code, Heading1, Heading2, Heading3, List, ListOrdered, Quote, Undo, Redo, ImageIcon, Link as LinkIcon, Loader2 } from 'lucide-react';
+import TextAlign from '@tiptap/extension-text-align';
+import { Bold, Italic, Strikethrough, Code, Heading1, Heading2, Heading3, List, ListOrdered, Quote, Undo, Redo, ImageIcon, Link as LinkIcon, Loader2, AlignLeft, AlignCenter, AlignRight, AlignJustify } from 'lucide-react';
 import { useRef, useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
 
@@ -60,6 +61,11 @@ const MenuBar = ({ editor }: { editor: any }) => {
             <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={`p-2 rounded hover:bg-white/10 ${editor.isActive('heading', { level: 2 }) ? 'bg-koudous-primary/20 text-koudous-primary' : 'text-koudous-text'}`} title="Titre 2"><Heading2 size={15} /></button>
             <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} className={`p-2 rounded hover:bg-white/10 ${editor.isActive('heading', { level: 3 }) ? 'bg-koudous-primary/20 text-koudous-primary' : 'text-koudous-text'}`} title="Titre 3"><Heading3 size={15} /></button>
             <div className="w-px h-6 bg-white/10 mx-1 self-center" />
+            <button type="button" onClick={() => editor.chain().focus().setTextAlign('left').run()} className={`p-2 rounded hover:bg-white/10 ${editor.isActive({ textAlign: 'left' }) ? 'bg-koudous-primary/20 text-koudous-primary' : 'text-koudous-text'}`} title="Aligner à gauche"><AlignLeft size={15} /></button>
+            <button type="button" onClick={() => editor.chain().focus().setTextAlign('center').run()} className={`p-2 rounded hover:bg-white/10 ${editor.isActive({ textAlign: 'center' }) ? 'bg-koudous-primary/20 text-koudous-primary' : 'text-koudous-text'}`} title="Centrer"><AlignCenter size={15} /></button>
+            <button type="button" onClick={() => editor.chain().focus().setTextAlign('right').run()} className={`p-2 rounded hover:bg-white/10 ${editor.isActive({ textAlign: 'right' }) ? 'bg-koudous-primary/20 text-koudous-primary' : 'text-koudous-text'}`} title="Aligner à droite"><AlignRight size={15} /></button>
+            <button type="button" onClick={() => editor.chain().focus().setTextAlign('justify').run()} className={`p-2 rounded hover:bg-white/10 ${editor.isActive({ textAlign: 'justify' }) ? 'bg-koudous-primary/20 text-koudous-primary' : 'text-koudous-text'}`} title="Justifier"><AlignJustify size={15} /></button>
+            <div className="w-px h-6 bg-white/10 mx-1 self-center" />
             <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} className={`p-2 rounded hover:bg-white/10 ${editor.isActive('bulletList') ? 'bg-koudous-primary/20 text-koudous-primary' : 'text-koudous-text'}`} title="Liste"><List size={15} /></button>
             <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`p-2 rounded hover:bg-white/10 ${editor.isActive('orderedList') ? 'bg-koudous-primary/20 text-koudous-primary' : 'text-koudous-text'}`} title="Liste numérotée"><ListOrdered size={15} /></button>
             <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`p-2 rounded hover:bg-white/10 ${editor.isActive('blockquote') ? 'bg-koudous-primary/20 text-koudous-primary' : 'text-koudous-text'}`} title="Citation"><Quote size={15} /></button>
@@ -93,6 +99,7 @@ export default function RichTextEditor({ content, onChange, placeholder = "Rédi
     const editor = useEditor({
         extensions: [
             StarterKit,
+            TextAlign.configure({ types: ['heading', 'paragraph'], defaultAlignment: 'left' }),
             Image.configure({ inline: false, allowBase64: true }),
             Link.configure({ openOnClick: false }),
         ],

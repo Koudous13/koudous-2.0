@@ -39,3 +39,12 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--koudous-primary);
 }
+
+/* Fix CSS: Préservation des sauts de ligne vides dans l'éditeur Tiptap */
+.prose p:empty {
+  min-height: 1.5rem;
+}
+.prose p:empty::before {
+  content: "\00a0";
+  display: block;
+}
