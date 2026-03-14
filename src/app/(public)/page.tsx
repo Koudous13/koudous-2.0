@@ -49,7 +49,7 @@ export default async function Home() {
     supabase.from("projects").select("id, title, slug, short_description, cover_image, stack_tags, is_pro").order("created_at", { ascending: false }).limit(3),
     supabase.from("articles").select("id, title, slug, excerpt, category, created_at, cover_image").eq("published", true).neq("slug", "").not("slug", "is", null).order("created_at", { ascending: false }).limit(3),
     supabase.from("timeline_steps").select("id, title, period, category, location").order("order_index", { ascending: false }).limit(3),
-    supabase.from("gallery").select("id, image_url, title, category").order("created_at", { ascending: false }).limit(6),
+    supabase.from("gallery").select("id, image_url, title, category").order("created_at", { ascending: false }).limit(3),
   ]);
 
   const heroText = settings?.hero_text || "Je conçois et déploie des systèmes intelligents et des architectures d'automatisation de pointe.";
