@@ -53,8 +53,8 @@ export default async function Home() {
   ]);
 
   const heroText = settings?.hero_text || "Je conçois et déploie des systèmes intelligents et des architectures d'automatisation de pointe.";
-  const statsProjects = settings?.total_projects ?? proCount ?? 0;
-  const statsArticles = settings?.total_articles ?? articleCount ?? 0;
+  const statsProjects = Math.max(settings?.total_projects || 0, proCount || 0);
+  const statsArticles = Math.max(settings?.total_articles || 0, articleCount || 0);
 
   return (
     <main className="min-h-screen flex flex-col relative overflow-hidden">
