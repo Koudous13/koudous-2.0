@@ -183,7 +183,7 @@ export default function EditProjectForm({ project }: { project: any }) {
                                 <h2 className="text-3xl font-display font-bold text-white mb-6 border-l-4 border-koudous-secondary pl-4">Architecture</h2>
                                 <div 
                                     className="prose prose-invert prose-lg max-w-none prose-p:text-koudous-text/80 prose-headings:font-display prose-headings:text-white prose-a:text-koudous-primary"
-                                    dangerouslySetInnerHTML={{ __html: formData.content || formData.description || "" }}
+                                    dangerouslySetInnerHTML={{ __html: formData.description || "" }}
                                 />
                             </div>
                         </div>
