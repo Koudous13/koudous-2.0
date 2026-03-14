@@ -32,8 +32,8 @@ export default async function AdminParcoursPage() {
                 </Link>
             </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
-                <table className="w-full text-left">
+            <div className="bg-white/5 border border-white/10 rounded-xl overflow-x-auto">
+                <table className="w-full text-left min-w-[600px]">
                     <thead className="bg-black/40 border-b border-white/10 text-xs uppercase text-koudous-text/60">
                         <tr>
                             <th className="px-6 py-4 font-medium">Période</th>

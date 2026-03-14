@@ -75,7 +75,7 @@ export default async function AdminDashboardPage() {
             </div>
 
             {/* LIVE STATS */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                     { label: "Projets", value: projectsCount || 0, icon: Layers, color: "text-koudous-secondary", href: "/admin/projets" },
                     { label: "Articles", value: `${articlesPublished || 0}/${articlesCount || 0}`, icon: PenTool, color: "text-koudous-primary", subtitle: "publiés", href: "/admin/articles" },
@@ -94,7 +94,7 @@ export default async function AdminDashboardPage() {
             </div>
 
             {/* SECONDARY STATS */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {[
                     { label: "Étapes Parcours", value: parcoursCount || 0, href: "/admin/parcours" },
                     { label: "Échecs Documentés", value: echecsCount || 0, href: "/admin/echecs" },

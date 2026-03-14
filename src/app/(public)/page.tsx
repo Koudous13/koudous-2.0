@@ -187,7 +187,7 @@ export default async function Home() {
           <div className="flex items-end justify-between mb-12">
             <div>
               <p className="font-mono text-xs text-koudous-primary uppercase tracking-widest mb-2">// Ce que je construis</p>
-              <h2 className="text-4xl md:text-5xl font-display font-extrabold text-white">Projets Récents</h2>
+              <h2 className="text-3xl md:text-5xl font-display font-extrabold text-white">Récents Projets</h2>
             </div>
             <Link href="/realisations-pro" className="hidden md:flex items-center gap-2 text-koudous-text/50 hover:text-white transition-colors font-mono text-sm">
               Voir tout <ChevronRight size={16} />
@@ -259,7 +259,7 @@ export default async function Home() {
           <div className="flex items-end justify-between mb-12">
             <div>
               <p className="font-mono text-xs text-koudous-secondary uppercase tracking-widest mb-2">// Ce que je pense</p>
-              <h2 className="text-4xl md:text-5xl font-display font-extrabold text-white">Derniers Articles</h2>
+              <h2 className="text-3xl md:text-5xl font-display font-extrabold text-white">Derniers Articles</h2>
             </div>
             <Link href="/articles" className="hidden md:flex items-center gap-2 text-koudous-text/50 hover:text-white transition-colors font-mono text-sm">
               Voir tout <ChevronRight size={16} />
@@ -271,7 +271,7 @@ export default async function Home() {
           <div className="space-y-4">
             {latestArticles.map((article, i) => (
               <SlideIn key={article.id} from="left" delay={i * 0.08}>
-                <Link href={`/ articles / ${article.slug} `} className="group flex flex-col md:flex-row items-start md:items-center gap-6 p-6 bg-white/[0.03] border border-white/10 rounded-2xl hover:border-koudous-secondary/50 hover:bg-white/5 transition-all duration-300">
+                <Link href={`/articles/${article.slug}`} className="group flex flex-col md:flex-row items-start md:items-center gap-6 p-6 bg-white/[0.03] border border-white/10 rounded-2xl hover:border-koudous-secondary/50 hover:bg-white/5 transition-all duration-300">
                   {/* Cover */}
                   {article.cover_image && (
                     <div className="relative w-full md:w-32 h-20 rounded-xl overflow-hidden shrink-0 bg-black/40">
@@ -376,7 +376,7 @@ export default async function Home() {
             <div className="flex items-end justify-between mb-10">
               <div>
                 <p className="font-mono text-xs text-koudous-text/40 uppercase tracking-widest mb-2">// Ce que je vis</p>
-                <h2 className="text-4xl md:text-5xl font-display font-extrabold text-white">La Galerie</h2>
+                <h2 className="text-3xl md:text-5xl font-display font-extrabold text-white">La Galerie</h2>
               </div>
               <Link href="/galerie" className="hidden md:flex items-center gap-2 text-koudous-text/50 hover:text-white transition-colors font-mono text-sm">
                 Voir tout <ChevronRight size={16} />
@@ -419,13 +419,13 @@ export default async function Home() {
       <section className="relative z-10 border-t border-white/5 mt-8">
         <div className="max-w-6xl mx-auto px-4 py-20">
           <FadeUp>
-            <div className="text-center mb-14">
+            <div className="text-center mb-10 md:mb-14">
               <h2 className="text-3xl md:text-4xl font-display font-extrabold text-white mb-3">Explorer l'écosystème</h2>
-              <p className="text-koudous-text/40 font-mono text-sm">Chaque section est une porte d'entrée.</p>
+              <p className="text-koudous-text/50 font-mono text-sm">Naviguez vers l'expertise de votre choix.</p>
             </div>
           </FadeUp>
 
-          <FadeStagger className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3" staggerDelay={0.06}>
+          <FadeStagger className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3" staggerDelay={0.06}>
             {[
               { href: "/realisations-pro", label: "Projets Pro" },
               { href: "/realisations-academiques", label: "Académique" },
