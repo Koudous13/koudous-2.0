@@ -177,7 +177,7 @@ export default function RichTextEditor({ content, onChange, placeholder = "Rédi
     const handleCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const val = e.target.value;
         onChange(val);
-        editor?.commands.setContent(val, false);
+        editor?.commands.setContent(val, { emitUpdate: false });
     };
 
     return (
