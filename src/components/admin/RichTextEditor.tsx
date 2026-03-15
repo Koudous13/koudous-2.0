@@ -15,7 +15,7 @@ interface RichTextEditorProps {
     placeholder?: string;
 }
 
-import { Terminal, Code2 } from 'lucide-react';
+import { Terminal, Code2, Pencil } from 'lucide-react';
 
 const MenuBar = ({ editor, showCode, setShowCode }: { editor: any, showCode: boolean, setShowCode: (v: boolean) => void }) => {
     const [isUploading, setIsUploading] = useState(false);
@@ -63,7 +63,7 @@ const MenuBar = ({ editor, showCode, setShowCode }: { editor: any, showCode: boo
                     className={`p-1.5 rounded transition-all ${!showCode ? 'bg-koudous-primary text-black' : 'text-koudous-text/60 hover:text-white'}`} 
                     title="Visuel"
                 >
-                    <PenTool size={14} />
+                    <Pencil size={14} />
                 </button>
                 <button 
                     type="button" 
